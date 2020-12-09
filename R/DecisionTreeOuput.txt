@@ -1,0 +1,72 @@
+
+> # Display the text output from each decision tree. 
+> # You're looking for the tree that minimizes xerror. 
+> # xerror is the relative misclassifica .... [TRUNCATED] 
+
+###### Display the text output from each decision tree: ######
+
+> printcp(MyTree)
+
+Classification tree:
+rpart(formula = payback ~ age + sex + region + income + married + 
+    children + car + save_act + current_act + mortgage, data = trainingSet, 
+    method = "class", control = rpart.control(minsplit = MINIMUMSPLIT, 
+        cp = COMPLEXITYFACTOR))
+
+Variables actually used in tree construction:
+[1] children income   married  mortgage
+
+Root node error: 161/360 = 0.44722
+
+n= 360 
+
+        CP nsplit rel error  xerror     xstd
+1 0.136646      0   1.00000 1.00000 0.058595
+2 0.114907      1   0.86335 0.90683 0.057864
+3 0.080745      4   0.51553 0.67081 0.054005
+4 0.062112      5   0.43478 0.65839 0.053715
+5 0.055901      6   0.37267 0.65217 0.053566
+6 0.050000      7   0.31677 0.54658 0.050646
+
+> # Show the result graphically
+> plotcp(MyTree, minline = FALSE)
+
+> #######################################################################
+> ######                     Pruning the tree                      ######
+>  .... [TRUNCATED] 
+
+> #######################################################################
+> ######          Evaluating Classification Accuracy               ######
+>  .... [TRUNCATED] 
+
+> predValidation <- predict(MyTree, validationSet, type="class")
+
+> # Generating Confusion Matrices for the traing and validation sets:
+> cat("\n###### Confusion Matrix for the training set ######\n")
+
+###### Confusion Matrix for the training set ######
+
+> table(Predicted=predTraining,Observed=trainingSet[, OUTCOME_COL] )
+         Observed
+Predicted   0   1
+        0 184  36
+        1  15 125
+
+> cat("\n###### Confusion Matrix for the validation set ######\n")
+
+###### Confusion Matrix for the validation set ######
+
+> table(Predicted=predValidation,Observed=validationSet[, OUTCOME_COL] )
+         Observed
+Predicted  0  1
+        0 97 29
+        1 30 84
+
+> # Correct Classification Rate:
+> # Check whether there is a match between each predicted value (in pred) and the actual value
+> #    (The value of O .... [TRUNCATED] 
+
+> predRateValidation <- mean(predValidation == validationSet[, OUTCOME_COL])
+
+> # This stops R from writing any more to the text output file.
+> sink()
